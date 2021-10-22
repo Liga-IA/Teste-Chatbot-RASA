@@ -4,28 +4,16 @@ Apenas um repositorio para guardar os testes com o framework
 
 ## Como colocar o chatbot em um site
 
+Não esquece de habilitar o socket no credentials, se não vai ficar dando 404
+
 ### Por script tag
 
-<script>!(function () {
-  let e = document.createElement("script"),
-    t = document.head || document.getElementsByTagName("head")[0];
-  (e.src =
-    "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.0/lib/index.js"),
-    // Replace 1.x.x with the version that you want
-    (e.async = !0),
-    (e.onload = () => {
-      window.WebChat.default(
-        {
-          customData: { language: "en" },
-          socketUrl: "https://bf-botfront.development.agents.botfront.cloud", // só trocar o link
-          // add other props here
-        },
-        null
-      );
-    }),
-    t.insertBefore(e, t.firstChild);
-})();
-</script>
+<body>
+  <!--https://chat-widget-docs.rasa.com/?path=/docs/rasa-chat-widget--widget-->
+  <div  
+    data-root-element-id="storybook-preview-wrapper"
+    data-websocket-url="https://5005-gray-stork-zkryg336.ws-us17.gitpod.io" id="rasa-chat-widget"></div>
+  <script src="https://unpkg.com/@rasahq/rasa-chat" type="application/javascript"></script>
 
 ### COmo componente React
 
@@ -50,3 +38,20 @@ function CustomWidget = () => {
   )
 }
 ```
+
+## Comandos
+
+No pipenv acho que vou ter que usar `pipenv run`
+
+- `$ pipenv install rasa`
+  - Instala o RASA
+  - Demora um pouco uns 20 min +/-
+- `$ pipenv shell`
+- `$ pipenv run rasa init`
+  - inicia o projeto
+- `$ pipenv run rasa shell`
+  - Aqui ele executa o bot pra conversar pela CLI
+
+### Para rodar o serv do bot e integrar com site
+
+- `$ rasa run -m models --enable-api --cors "*"`
